@@ -165,8 +165,9 @@ func (d *acmedb) handleDBUpgradeTo1() error {
 func (d *acmedb) NewTXTValuesInTransaction(tx *sql.Tx, subdomain string) error {
 	var err error
 	instr := fmt.Sprintf("INSERT INTO txt (Subdomain, LastUpdate) values('%s', 0)", subdomain)
-	_, _ = tx.Exec(instr)
-	_, _ = tx.Exec(instr)
+	for i := 0; i < Config.General.TxtRecordsCount; i++ {
+		_, _ = tx.Exec(instr)
+	}
 	return err
 }
 
