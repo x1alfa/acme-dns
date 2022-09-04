@@ -254,7 +254,7 @@ func (d *acmedb) GetTXTForDomain(domain string) ([]string, error) {
 	domain = sanitizeString(domain)
 	var txts []string
 	getSQL := `
-	SELECT Value FROM txt WHERE Subdomain=$1 LIMIT 2
+	SELECT Value FROM txt WHERE Subdomain=$1
 	`
 	if Config.Database.Engine == "sqlite3" {
 		getSQL = getSQLiteStmt(getSQL)
